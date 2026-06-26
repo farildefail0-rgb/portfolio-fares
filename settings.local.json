@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls \"C:\\\\Users\\\\belba\\\\Desktop\\\\claude code\\\\\" | grep -i monte)",
+      "PowerShell(Get-ChildItem \"C:\\\\Users\\\\belba\\\\Downloads\\\\\" | Where-Object {$_.Extension -match \"\\\\.\\(jpg|jpeg|png|webp\\)\"} | Select-Object Name, LastWriteTime | Sort-Object LastWriteTime -Descending | Select-Object -First 10)",
+      "PowerShell(Head -20)"
+    ]
+  }
+}

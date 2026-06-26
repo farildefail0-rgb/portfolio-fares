@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portefeuille de Fares</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <style>
+    /* ===== GLOBAL ===== */
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f9f9f9;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* ===== NAVBAR ===== */
+    #mainNav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      padding: 0 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+    }
+    .logo_name {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      text-decoration: none;
+    }
+    .logo_name:hover { color: #2563eb; text-decoration: none; }
+    .nav-links { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; }
+    .nav-links li a {
+      display: block;
+      padding: 0 16px;
+      line-height: 64px;
+      color: #333;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links li a:hover { color: #2563eb; }
+
+    /* ===== PRIMARY COLOR ===== */
+    :root { --primary: #2563eb; --primary-dark: #1e4fba; --light-bg: #f0f4ff; }
+
+    /* ===== HERO SECTION ===== */
+    #section-hero {
+      position: relative;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-top: 64px;
+    }
+    .hero-bg {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #2563eb 100%);
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,0.35);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #fff;
+      padding: 40px 20px;
+      max-width: 800px;
+    }
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+    }
+    .hero-separator {
+      width: 60px; height: 3px;
+      background: #fff;
+      margin: 20px auto;
+      border-radius: 2px;
+    }
+    .hero-content h2 {
+      font-size: 1.15rem;
+      font-weight: 400;
+      line-height: 1.7;
+      opacity: 0.92;
+    }
+
+    /* ===== SECTION GENERAL ===== */
+    section { padding: 80px 0; }
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #1a1a2e;
+    }
+    .section-separator { text-align: center; margin-bottom: 50px; }
+    .section-separator hr {
+      width: 60px; border: 2px solid var(--primary);
+      margin: 0 auto;
+    }
+
+    /* ===== ABOUT SECTION ===== */
+    #section-about {
+      background: #1e3a8a;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+    }
+    .about-inner {
+      text-align: center;
+      color: #fff;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 60px 20px;
+    }
+    .about-inner .section-title { color: #fff; font-size: 2.5rem; }
+    .about-separator { width: 60px; height: 3px; background: #fff; margin: 20px auto 30px; border-radius: 2px; }
+    .about-text { font-size: 1rem; line-height: 1.8; opacity: 0.92; margin-bottom: 30px; }
+    .about-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-about {
+      padding: 14px 32px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      letter-spacing: 0.5px;
+      transition: background 0.2s, color 0.2s;
+    }
+    .btn-about-primary {
+      background: #fff;
+      color: #1e3a8a;
+      border: 2px solid #fff;
+    }
+    .btn-about-primary:hover { background: transparent; color: #fff; }
+    .btn-about-secondary {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+    .btn-about-secondary:hover { background: #fff; color: #1e3a8a; }
+
+    /* ===== SKILLS SECTION ===== */
+    #section-skills { background: #f9f9f9; }
+    .skills-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .skill-card { width: calc(33.33% - 30px); min-width: 260px; }
+    @media (max-width: 900px) { .skill-card { width: calc(50% - 30px); } }
+    @media (max-width: 600px) { .skill-card { width: 100%; } }
+    .skill-card {
+      background: #fff;
+      border-top: 4px solid var(--primary);
+      border-radius: 6px;
+      padding: 36px 24px 30px;
+      text-align: center;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      transition: transform 0.25s, box-shadow 0.25s;
+    }
+    .skill-card:hover { transform: translateY(-6px); box-shadow: 0 8px 24px rgba(37,99,235,0.13); }
+    .skill-img-circle {
+      width: 150px; height: 150px;
+      border-radius: 50%;
+      background-size: cover;
+      background-position: center;
+      margin: 0 auto 20px;
+      display: block;
+    }
+    .skill-card h4 { font-weight: 700; font-size: 1rem; margin-bottom: 12px; color: #1a1a2e; }
+    .skill-card p { font-size: 0.9rem; color: #555; line-height: 1.7; margin: 0; text-align: center; }
+
+    /* ===== EXPERIENCE SECTION ===== */
+    #section-experience { background: #1e3a8a; }
+    #section-experience .section-title { color: #fff; }
+    #section-experience .section-separator hr { border-color: #fff; }
+    .exp-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 32px 36px;
+      color: #fff;
+      margin-bottom: 24px;
+      transition: background 0.2s, transform 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+    .exp-card:hover { background: rgba(255,255,255,0.18); transform: translateY(-3px); }
+    .exp-card h4 { font-weight: 700; font-size: 1.15rem; margin-bottom: 10px; }
+    .exp-card .exp-meta { font-size: 0.85rem; opacity: 0.75; margin-bottom: 14px; }
+    .exp-card p { font-size: 0.95rem; line-height: 1.75; opacity: 0.9; margin: 0; }
+    .exp-card .exp-hint { font-size: 0.8rem; opacity: 0.6; margin-top: 14px; font-style: italic; }
+    .exp-container { max-width: 900px; margin: 0 auto; padding: 0 20px; }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-box {
+      background: #fff;
+      border-radius: 12px;
+      max-width: 680px;
+      width: 100%;
+      max-height: 90vh;
+      overflow-y: auto;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+      from { opacity: 0; transform: translateY(20px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-header {
+      background: linear-gradient(135deg, #0f172a, #1e3a8a);
+      color: #fff;
+      padding: 30px 36px 24px;
+      border-radius: 12px 12px 0 0;
+      position: relative;
+    }
+    .modal-header h3 { font-size: 1.3rem; font-weight: 700; margin: 0 0 6px; }
+    .modal-header .modal-meta { font-size: 0.85rem; opacity: 0.75; }
+    .modal-close {
+      position: absolute; top: 18px; right: 20px;
+      background: rgba(255,255,255,0.15);
+      border: none; color: #fff;
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      font-size: 1rem; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: rgba(255,255,255,0.3); }
+    .modal-body { padding: 30px 36px; }
+    .modal-body h4 { font-size: 0.95rem; font-weight: 700; color: #1e3a8a; margin: 0 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .modal-body p { font-size: 0.95rem; color: #444; line-height: 1.8; margin: 0 0 22px; }
+    .modal-body ul { padding-left: 20px; margin: 0 0 22px; }
+    .modal-body ul li { font-size: 0.93rem; color: #444; line-height: 1.8; margin-bottom: 4px; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+    .modal-tag {
+      background: #f0f4ff;
+      color: #1e3a8a;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+    }
+    .modal-btn {
+      display: inline-block;
+      background: var(--primary);
+      color: #fff;
+      padding: 13px 28px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .modal-btn:hover { background: var(--primary-dark); color: #fff; text-decoration: none; }
+
+    /* ===== PROJECTS SECTION ===== */
+    #section-projects { background: #f9f9f9; }
+    .projects-list { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+    .project-item {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-bottom: 48px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+      overflow: hidden;
+    }
+    .project-item.reverse { flex-direction: row-reverse; }
+    .project-img {
+      flex: 0 0 320px;
+      height: 220px;
+      background: var(--light-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 4rem;
+      color: var(--primary);
+    }
+    .project-texts { flex: 1; padding: 32px 32px 32px 0; }
+    .project-item.reverse .project-texts { padding: 32px 0 32px 32px; }
+    .project-texts h4 { font-weight: 700; font-size: 1.05rem; color: #1a1a2e; margin-bottom: 12px; }
+    .project-texts p { font-size: 0.92rem; color: #555; line-height: 1.7; margin-bottom: 18px; }
+    .more-link {
+      color: var(--primary);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+    }
+    .more-link:hover { text-decoration: underline; }
+
+    /* ===== INTERESTS SECTION ===== */
+    #section-interests { background: #1e3a8a; }
+    #section-interests .section-title { color: #fff; }
+    #section-interests .section-separator hr { border-color: #fff; }
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .interest-card {
+      background: rgba(255,255,255,0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      color: #fff;
+      transition: background 0.2s;
+    }
+    .interest-card:hover { background: rgba(255,255,255,0.15); }
+    .interest-img {
+      height: 180px;
+      background: rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 4rem;
+    }
+    .interest-body { padding: 20px 24px; }
+    .interest-body h4 { font-weight: 700; font-size: 1rem; margin-bottom: 8px; }
+    .interest-body p { font-size: 0.88rem; line-height: 1.65; opacity: 0.88; margin: 0 0 12px; }
+    .interest-link { color: #93c5fd; font-weight: 600; font-size: 0.85rem; text-decoration: none; }
+    .interest-link:hover { text-decoration: underline; }
+
+    /* ===== CONTACT SECTION ===== */
+    #section-contact { background: #f9f9f9; }
+    .contact-inner {
+      display: flex;
+      gap: 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      flex-wrap: wrap;
+    }
+    .contact-details { flex: 0 0 260px; }
+    .contact-details ul { list-style: none; padding: 0; margin: 0; }
+    .contact-details ul li { margin-bottom: 14px; font-size: 0.95rem; color: #444; }
+    .contact-details ul li a { color: #2563eb; text-decoration: none; }
+    .contact-details ul li a:hover { text-decoration: underline; }
+    .contact-form { flex: 1; min-width: 260px; }
+    .contact-form .form-group { margin-bottom: 16px; }
+    .contact-form .form-control {
+      border-radius: 4px;
+      border: 1px solid #d1d5db;
+      padding: 10px 14px;
+      font-size: 0.92rem;
+    }
+    .contact-form .form-row { display: flex; gap: 12px; }
+    .contact-form .form-row .form-group { flex: 1; }
+    .btn-submit {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: var(--primary-dark); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: #1a1a2e;
+      color: #aaa;
+      padding: 40px 30px;
+    }
+    .footer-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+    }
+    .footer-brand { font-size: 1rem; }
+    .footer-brand .name { font-weight: 700; color: #fff; font-size: 1.1rem; margin-bottom: 4px; }
+    .footer-brand .copy { font-size: 0.82rem; }
+    .footer-nav { display: flex; flex-direction: column; gap: 6px; }
+    .footer-nav a { color: #aaa; font-size: 0.85rem; font-weight: 600; text-decoration: none; }
+    .footer-nav a:hover { color: #fff; }
+
+    /* ===== GOTO TOP ===== */
+    #gotoTop {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: var(--primary);
+      color: #fff;
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      text-decoration: none;
+      box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+      z-index: 999;
+    }
+    #gotoTop:hover { background: var(--primary-dark); }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .hero-content h1 { font-size: 2rem; }
+      .nav-links { display: none; }
+      .project-item, .project-item.reverse { flex-direction: column; }
+      .project-img { flex: none; width: 100%; height: 160px; }
+      .project-texts, .project-item.reverse .project-texts { padding: 20px; }
+      .contact-details { flex: none; width: 100%; }
+      .footer-inner { flex-direction: column; }
+    }
+
+    /* hamburger mobile */
+    .hamburger {
+      display: none;
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer; color: #333;
+    }
+    @media (max-width: 768px) { .hamburger { display: block; } }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="mainNav">
+  <a href="#section-hero" class="logo_name">portfolio de fares</a>
+  <ul class="nav-links">
+    <li><a href="#section-hero">Accueil</a></li>
+    <li><a href="#section-about">À propos</a></li>
+    <li><a href="#section-skills">Compétences</a></li>
+    <li><a href="#section-experience">Expérience</a></li>
+    <li><a href="#section-projects">Projets</a></li>
+    <li><a href="#section-interests">Centres d'intérêts</a></li>
+    <li><a href="#section-contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMobileMenu()">&#9776;</button>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="section-hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1>BELBACHIR Fares</h1>
+    <div class="hero-separator"></div>
+    <h2>Étudiant de 21 ans en 3ᵉ année de BUT GEII spécialité ESE — Électronique et Systèmes Embarqués, passionné par la programmation embarquée, les RTOS et la conception de circuits.</h2>
+  </div>
+</section>
+
+<!-- ===== À PROPOS ===== -->
+<section id="section-about">
+  <div class="about-inner">
+    <div class="section-title">À propos de moi</div>
+    <div class="about-separator"></div>
+    <p class="about-text">
+      Étudiant en 3ᵉ année de BUT GEII spécialité Systèmes Embarqués à l'IUT d'Évry, je maîtrise la programmation embarquée en C, C++ et Python, ainsi que les RTOS (FreeRTOS, VxWorks, Zephyr), les langages de description matérielle VHDL/Verilog et la programmation sur Arduino et Raspberry Pi. J'ai acquis une expérience concrète à travers deux stages : au CNRS de l'Observatoire de Paris à Meudon où j'ai développé en Python une interface graphique pour la visualisation en temps réel de données issues d'un convertisseur analogique-numérique LTC237, et chez Shopline Electronics à Chaville où j'ai travaillé sur des dispositifs embarqués basés sur l'analyse d'images et les lidars. Je suis à la recherche d'une alternance de 3 ans en systèmes embarqués à partir de septembre 2026.
+    </p>
+    <div class="about-btns">
+      <a href="#section-contact" class="btn-about btn-about-primary">ME CONTACTER</a>
+      <a href="#section-experience" class="btn-about btn-about-secondary">Voir mon expérience</a>
+      <a href="https://youtu.be/pHAhVrN7SMM" target="_blank" class="btn-about btn-about-secondary">VOIR MON CV VIDÉO</a>
+      <a href="file:///C:/Users/belba/Downloads/CV_2026-06-18_Fares_BELBACHIR.pdf" target="_blank" class="btn-about btn-about-secondary">Voir mon CV</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== COMPÉTENCES ===== -->
+<section id="section-skills">
+  <div class="container-fluid">
+    <h2 class="section-title">Compétences</h2>
+    <div class="section-separator"><hr></div>
+    <div class="skills-grid">
+
+      <div class="skill-card">
+        <div class="skill-img-circle" style="background-image: url('https://images.unsplash.com/photo-1563770660941-20978e870e26?w=300&q=80');"></div>
+        <h4>Conception de circuits</h4>
+        <p>Réalisation de schémas électroniques et de PCB sous KiCad : routage, gestion des contraintes et préparation des fichiers de fabrication. Complété par une pratique sur Wintypon/WinSchema lors de projets de formation.</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-img-circle" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=300&q=80');"></div>
+        <h4>Électricité & Électrotechnique</h4>
+        <p>C'est le cœur de ma formation. J'ai appris à lire et concevoir des schémas électriques, réaliser du câblage d'armoires, utiliser des outils de mesure (multimètre, oscilloscope), et assurer le dimensionnement et la sécurité des installations électriques.</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-img-circle" style="background-image: url('https://images.unsplash.com/photo-1581092160562-40aa08e78837?w=300&q=80');"></div>
+        <h4>Automatisme industriel</h4>
+        <p>J'ai développé ma capacité à concevoir des Grafcet, programmer des automates Siemens S7-1200 avec TIA Portal, et mettre en œuvre des systèmes automatisés comme un monte-charge. Cette compétence me permet de lier l'électrotechnique au contrôle automatique.</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-img-circle" style="background-image: url('https://images.unsplash.com/photo-1518770660439-4636190af475?w=300&q=80');"></div>
+        <h4>Programmation embarquée</h4>
+        <p>Maîtrise du C, C++ et Python pour microcontrôleurs, développement sur Arduino, Raspberry Pi et STM32. Conception de firmwares robustes pour des systèmes contraints en ressources.</p>
+      </div>
+
+      <div class="skill-card">
+        <div class="skill-img-circle" style="background-image: url('https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?w=300&q=80');"></div>
+        <h4>VHDL / Verilog</h4>
+        <p>Description matérielle de circuits numériques, conception et simulation de composants logiques, implémentation sur FPGA. Maîtrise du flux de conception HDL de la spécification jusqu'à la synthèse.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== EXPÉRIENCE PROFESSIONNELLE ===== -->
+<section id="section-experience">
+  <div class="container-fluid">
+    <h2 class="section-title">Expérience professionnelle</h2>
+    <div class="section-separator"><hr style="border-color:#fff;"></div>
+    <div class="exp-container">
+
+      <div class="exp-card" onclick="openModal('modal-cnrs')">
+        <h4>Stage — CNRS, Observatoire de Paris à Meudon</h4>
+        <div class="exp-meta">2025 · 8 semaines · Développement logiciel embarqué</div>
+        <p>Développement d'une interface graphique en Python pour la visualisation en temps réel de données issues d'un convertisseur analogique-numérique LTC237.</p>
+        <div class="exp-hint">🔍 Cliquer pour en savoir plus</div>
+      </div>
+
+      <div class="exp-card" onclick="openModal('modal-shopline')">
+        <h4>Stage — Shopline Electronics, Chaville</h4>
+        <div class="exp-meta">Mars – Juin 2026 · 14 semaines · Systèmes embarqués & relation client</div>
+        <p>Participation à la production de dispositifs embarqués basés sur l'analyse d'images et des capteurs lidar, avec relation directe à la clientèle technique.</p>
+        <div class="exp-hint">🔍 Cliquer pour en savoir plus</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROJETS ===== -->
+<section id="section-projects">
+  <div class="container-fluid">
+    <h2 class="section-title">Projets</h2>
+    <div class="section-separator"><hr></div>
+    <div class="projects-list">
+
+      <div class="project-item" onclick="openModal('modal-monte-charge')" style="cursor:pointer;">
+        <div class="project-img" style="background:none;padding:0;overflow:hidden;"><img src="monte1.jpg" alt="Monte-charge" style="width:100%;height:100%;object-fit:contain;background:#f5f5f5;"></div>
+        <div class="project-texts">
+          <h4>🏗️ Projet : Monte-charge automatisé avec automate Siemens</h4>
+          <p>Ce projet avait pour objectif de concevoir, câbler et programmer un monte-charge industriel en respectant un cahier des charges précis. Le système devait fonctionner de manière automatique ou manuelle, en assurant sécurité et fiabilité.</p>
+          <span class="more-link">🔍 En savoir plus →</span>
+        </div>
+      </div>
+
+      <div class="project-item reverse" onclick="openModal('modal-sumo')" style="cursor:pointer;">
+        <div class="project-img" style="background:none;padding:0;overflow:hidden;"><img src="robot-sumo.jpg" alt="Robot Mini Sumo" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-texts">
+          <h4>🤖 Projet : Robot Mini Sumo autonome</h4>
+          <p>Ce projet avait pour objectif de concevoir un robot autonome capable de participer à un combat de type sumo robotique sur un ring circulaire appelé dohyo. Le robot devait détecter l'adversaire et éviter de sortir de l'aire de jeu.</p>
+          <span class="more-link">🔍 En savoir plus →</span>
+        </div>
+      </div>
+
+      <div class="project-item" onclick="openModal('modal-ligne')" style="cursor:pointer;">
+        <div class="project-img" style="background:none;padding:0;overflow:hidden;"><img src="robot-ligne.jpg" alt="Robot suiveur de ligne" style="width:100%;height:100%;object-fit:cover;"></div>
+        <div class="project-texts">
+          <h4>🤖 Projet : Robot suiveur de ligne</h4>
+          <p>Ce projet consistait à concevoir un robot capable de suivre une ligne noire de manière autonome grâce à des capteurs de lumière et un microcontrôleur Arduino.</p>
+          <span class="more-link">🔍 En savoir plus →</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CENTRES D'INTÉRÊTS ===== -->
+<section id="section-interests">
+  <div class="container-fluid">
+    <h2 class="section-title">Centres d'intérêts</h2>
+    <div class="section-separator"><hr style="border-color:#fff;"></div>
+    <div class="interests-grid">
+
+      <div class="interest-card">
+        <div class="interest-img">⚽</div>
+        <div class="interest-body">
+          <h4>Football</h4>
+          <p>Ma passion pour le football a commencé à 12 ans, où j'ai joué au FC Livry. Je participe régulièrement aux matchs et entraînements, ce sport m'apportant équilibre et esprit collectif.</p>
+        </div>
+      </div>
+
+      <div class="interest-card">
+        <div class="interest-img">🎾</div>
+        <div class="interest-body">
+          <h4>Tennis</h4>
+          <p>Le tennis est pour moi un sport à la fois physique et mental, qui demande précision, concentration et endurance. Je le pratique régulièrement pour entretenir ma condition physique et relever des défis individuels, loin du collectif mais tout aussi exigeant.</p>
+        </div>
+      </div>
+
+      <div class="interest-card">
+        <div class="interest-img">🎹</div>
+        <div class="interest-body">
+          <h4>Piano</h4>
+          <p>Le piano est ma passion artistique : il m'offre un espace de créativité et de détente loin du monde technique. Apprendre à jouer développe ma rigueur, ma patience et ma sensibilité musicale. Une façon unique de me ressourcer et d'exprimer ma créativité en dehors du monde technique.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CONTACT ===== -->
+<section id="section-contact">
+  <div class="container-fluid">
+    <h2 class="section-title">Contact</h2>
+    <div class="section-separator"><hr></div>
+    <div class="contact-inner">
+
+      <div class="contact-details">
+        <ul>
+          <li><i class="fa fa-map-marker" style="margin-right:8px;color:#2563eb;"></i> Paris, France</li>
+          <li>
+            <a href="tel:+33783852223">
+              <i class="fa fa-phone" style="margin-right:8px;color:#2563eb;"></i>07 83 85 22 23
+            </a>
+            &nbsp;—&nbsp; Fares BELBACHIR
+          </li>
+          <li>
+            <a href="mailto:belbachir.fares1@gmail.com">
+              <i class="fa fa-envelope" style="margin-right:8px;color:#2563eb;"></i>belbachir.fares1@gmail.com
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Nom" required>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" placeholder="Téléphone">
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="email" class="form-control" placeholder="Adresse email" required>
+        </div>
+        <div class="form-group">
+          <textarea class="form-control" placeholder="Message" style="min-height:100px;resize:vertical;"></textarea>
+        </div>
+        <button type="submit" class="btn-submit">Contactez-moi</button>
+      </form>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="name">portfolio de fares</div>
+      <div class="copy">Copyright © 2026 Tous droits réservés</div>
+    </div>
+    <nav class="footer-nav">
+      <a href="#section-hero">Accueil</a>
+      <a href="#section-about">À propos de moi</a>
+      <a href="#section-skills">Compétences</a>
+      <a href="#section-experience">Expérience professionnelle</a>
+      <a href="#section-projects">Projets</a>
+      <a href="#section-interests">Centres d'intérêts</a>
+      <a href="#section-contact">Contact</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- ===== MODAL MONTE-CHARGE ===== -->
+<div class="modal-overlay" id="modal-monte-charge" onclick="closeModalOutside(event, 'modal-monte-charge')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🏗️ Monte-charge automatisé — Siemens S7-1200</h3>
+      <div class="modal-meta">Projet de formation · BUT GEII · TIA Portal</div>
+      <button class="modal-close" onclick="closeModal('modal-monte-charge')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>Contexte</h4>
+      <p>Ce projet avait pour objectif de concevoir, câbler et programmer un monte-charge industriel en respectant un cahier des charges précis. Le système devait fonctionner en mode automatique ou manuel, en assurant sécurité et fiabilité à chaque étape.</p>
+
+      <h4>Réalisations</h4>
+      <ul>
+        <li>Conception du Grafcet de sécurité et du Grafcet de conduite.</li>
+        <li>Programmation de l'automate Siemens S7-1200 sous TIA Portal.</li>
+        <li>Câblage de l'armoire électrique et raccordement des capteurs de position.</li>
+        <li>Tests et validation du fonctionnement automatique et manuel.</li>
+      </ul>
+
+      <h4>Photos du projet</h4>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:22px;">
+        <img src="monte1.jpg" alt="Maquette monte-charge" style="width:100%;border-radius:8px;object-fit:contain;background:#f5f5f5;height:220px;">
+        <img src="monte2.jpg" alt="Armoire et câblage" style="width:100%;border-radius:8px;object-fit:contain;background:#f5f5f5;height:220px;">
+      </div>
+
+      <h4>Compétences mobilisées</h4>
+      <div class="modal-tags">
+        <span class="modal-tag">Automate Siemens S7-1200</span>
+        <span class="modal-tag">TIA Portal</span>
+        <span class="modal-tag">Grafcet</span>
+        <span class="modal-tag">Câblage électrique</span>
+        <span class="modal-tag">Capteurs de position</span>
+        <span class="modal-tag">Sécurité industrielle</span>
+      </div>
+
+      <a href="file:///C:/Users/belba/Downloads/compte_rendu_Belbachir_Bach_Zerbo.pdf" target="_blank" class="modal-btn">📄 Voir le compte rendu</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SUMO ===== -->
+<div class="modal-overlay" id="modal-sumo" onclick="closeModalOutside(event, 'modal-sumo')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🤖 Robot Mini Sumo autonome</h3>
+      <div class="modal-meta">Projet de formation · BUT GEII · Arduino / C</div>
+      <button class="modal-close" onclick="closeModal('modal-sumo')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>Contexte</h4>
+      <p>Ce projet avait pour objectif de concevoir un robot autonome capable de participer à un combat de type sumo robotique sur un ring circulaire appelé dohyo. Le robot devait détecter l'adversaire, l'attaquer efficacement, tout en évitant de sortir de l'aire de jeu.</p>
+
+      <h4>Réalisations</h4>
+      <ul>
+        <li>Conception mécanique et électronique du robot dans le respect des règles de compétition.</li>
+        <li>Programmation en C sur microcontrôleur Arduino.</li>
+        <li>Intégration de capteurs infrarouges pour la détection du bord du dohyo.</li>
+        <li>Intégration de capteurs ultrasons pour la détection de l'adversaire.</li>
+        <li>Stratégie d'attaque et d'esquive codée en machine à états.</li>
+      </ul>
+
+      <h4>Compétences mobilisées</h4>
+      <div class="modal-tags">
+        <span class="modal-tag">Arduino / C</span>
+        <span class="modal-tag">Capteurs IR</span>
+        <span class="modal-tag">Capteurs ultrasons</span>
+        <span class="modal-tag">Machine à états</span>
+        <span class="modal-tag">Robotique autonome</span>
+      </div>
+
+      <a href="file:///C:/Users/belba/Downloads/Fiche technique_Belbachir_Bach_Zerbo.pdf" target="_blank" class="modal-btn">📄 Voir le compte rendu</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SUIVEUR DE LIGNE ===== -->
+<div class="modal-overlay" id="modal-ligne" onclick="closeModalOutside(event, 'modal-ligne')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>🤖 Robot suiveur de ligne</h3>
+      <div class="modal-meta">Projet de formation · BUT GEII · Arduino / C</div>
+      <button class="modal-close" onclick="closeModal('modal-ligne')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>Contexte</h4>
+      <p>Ce projet consistait à concevoir un robot capable de suivre une ligne noire de manière autonome. Le robot détectait la ligne à l'aide de capteurs de lumière (photorésistances) associés à des LED RGB et gérait ses déplacements via un microcontrôleur Arduino.</p>
+
+      <h4>Réalisations</h4>
+      <ul>
+        <li>Conception du circuit électronique de détection par photorésistances et LED RGB.</li>
+        <li>Programmation de l'algorithme de suivi de ligne en C sur Arduino.</li>
+        <li>Implémentation d'un correcteur PID pour une trajectoire précise et fluide.</li>
+        <li>Tests et ajustements sur parcours réel.</li>
+      </ul>
+
+      <h4>Compétences mobilisées</h4>
+      <div class="modal-tags">
+        <span class="modal-tag">Arduino / C</span>
+        <span class="modal-tag">Photorésistances</span>
+        <span class="modal-tag">LED RGB</span>
+        <span class="modal-tag">Algorithme PID</span>
+        <span class="modal-tag">Robotique</span>
+      </div>
+
+      <a href="file:///C:/Users/belba/Downloads/SAE_S4-BELBACHIR_DIAW.pdf" target="_blank" class="modal-btn">📄 Voir le compte rendu</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL CNRS ===== -->
+<div class="modal-overlay" id="modal-cnrs" onclick="closeModalOutside(event, 'modal-cnrs')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Stage — CNRS, Observatoire de Paris à Meudon</h3>
+      <div class="modal-meta">2025 · 8 semaines · Développement logiciel embarqué</div>
+      <button class="modal-close" onclick="closeModal('modal-cnrs')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>Contexte</h4>
+      <p>Au sein du laboratoire de l'Observatoire de Paris à Meudon, j'ai intégré une équipe de chercheurs travaillant sur des instruments de mesure scientifique de haute précision. L'objectif était de concevoir un outil logiciel facilitant l'exploitation des données analogiques issues de leurs équipements.</p>
+
+      <h4>Missions réalisées</h4>
+      <ul>
+        <li>Développement d'une interface graphique complète en Python pour la visualisation en temps réel des données d'un convertisseur analogique-numérique LTC237.</li>
+        <li>Interfaçage logiciel-matériel : acquisition, traitement et affichage dynamique du signal analogique converti.</li>
+        <li>Mise en pratique des compétences en traitement du signal et en développement d'IHM (interface homme-machine).</li>
+        <li>Rédaction d'une documentation technique à destination de l'équipe de recherche.</li>
+      </ul>
+
+      <h4>Compétences mobilisées</h4>
+      <div class="modal-tags">
+        <span class="modal-tag">Python</span>
+        <span class="modal-tag">Tkinter / PyQt</span>
+        <span class="modal-tag">Traitement du signal</span>
+        <span class="modal-tag">ADC LTC237</span>
+        <span class="modal-tag">Interfaçage matériel</span>
+        <span class="modal-tag">Instrumentation scientifique</span>
+      </div>
+
+      <a href="file:///C:/Users/belba/Downloads/AHMEDBELBACHIR.rapport (1).pdf" target="_blank" class="modal-btn">📄 Voir le compte rendu de stage</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== MODAL SHOPLINE ===== -->
+<div class="modal-overlay" id="modal-shopline" onclick="closeModalOutside(event, 'modal-shopline')">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h3>Stage — Shopline Electronics, Chaville</h3>
+      <div class="modal-meta">Mars – Juin 2026 · 14 semaines · Systèmes embarqués & relation client</div>
+      <button class="modal-close" onclick="closeModal('modal-shopline')">✕</button>
+    </div>
+    <div class="modal-body">
+      <h4>Contexte</h4>
+      <p>Shopline Electronics est une entreprise spécialisée dans la conception et la vente de dispositifs électroniques embarqués. Durant ce stage de 14 semaines, j'ai participé activement à la production de systèmes intégrant des technologies de pointe en vision par ordinateur et en télédétection.</p>
+
+      <h4>Missions réalisées</h4>
+      <ul>
+        <li>Participation à l'assemblage et aux tests de dispositifs embarqués reposant sur l'analyse d'images en temps réel.</li>
+        <li>Intégration et configuration de capteurs lidar dans des systèmes embarqués complets.</li>
+        <li>Validation fonctionnelle des équipements avant livraison client.</li>
+        <li>Conseil et assistance technique directe auprès de la clientèle en boutique.</li>
+      </ul>
+
+      <h4>Compétences mobilisées</h4>
+      <div class="modal-tags">
+        <span class="modal-tag">Systèmes embarqués</span>
+        <span class="modal-tag">Analyse d'images</span>
+        <span class="modal-tag">Capteurs Lidar</span>
+        <span class="modal-tag">Tests & validation</span>
+        <span class="modal-tag">Relation client</span>
+        <span class="modal-tag">Électronique embarquée</span>
+      </div>
+
+      <a href="file:///C:/Users/belba/Downloads/AHMEDBELBACHIR.Rapport.pdf" target="_blank" class="modal-btn">📄 Voir le compte rendu de stage</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== GOTO TOP ===== -->
+<a id="gotoTop" href="#section-hero" title="Retour en haut">▲</a>
+
+<script>
+  // Modal functions
+  function openModal(id) {
+    document.getElementById(id).classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  function closeModalOutside(event, id) {
+    if (event.target === document.getElementById(id)) closeModal(id);
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.modal-overlay.active').forEach(m => {
+        m.classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    }
+  });
+
+  // Show/hide goto-top button
+  window.addEventListener('scroll', function () {
+    var btn = document.getElementById('gotoTop');
+    btn.style.display = window.scrollY > 300 ? 'flex' : 'none';
+  });
+
+  // Mobile menu toggle
+  function toggleMobileMenu() {
+    var nav = document.querySelector('.nav-links');
+    if (nav.style.display === 'flex') {
+      nav.style.display = 'none';
+    } else {
+      nav.style.display = 'flex';
+      nav.style.flexDirection = 'column';
+      nav.style.position = 'absolute';
+      nav.style.top = '64px';
+      nav.style.left = '0';
+      nav.style.right = '0';
+      nav.style.background = '#fff';
+      nav.style.boxShadow = '0 4px 12px rgba(0,0,0,0.1)';
+      nav.style.padding = '16px 0';
+    }
+  }
+
+  // Close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(function(a) {
+    a.addEventListener('click', function() {
+      var nav = document.querySelector('.nav-links');
+      if (window.innerWidth <= 768) nav.style.display = 'none';
+    });
+  });
+
+  // Contact form
+  function handleSubmit(e) {
+    e.preventDefault();
+    alert('Merci pour votre message ! Je vous répondrai dans les plus brefs délais.');
+    e.target.reset();
+  }
+</script>
+
+</body>
+</html>
